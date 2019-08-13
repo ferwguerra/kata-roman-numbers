@@ -13,74 +13,66 @@ public class RomanConverter {
         romanByArabicNumbers.put(5, "V");
         romanByArabicNumbers.put(9, "IX");
         romanByArabicNumbers.put(10, "X");
+        romanByArabicNumbers.put(40, "XL");
+        romanByArabicNumbers.put(50, "L");
+        romanByArabicNumbers.put(90, "XC");
+        romanByArabicNumbers.put(100, "C");
+        romanByArabicNumbers.put(400, "CD");
+        romanByArabicNumbers.put(500, "D");
+        romanByArabicNumbers.put(900, "CM");
+        romanByArabicNumbers.put(1000, "M");
     }
 
     public String convert(int arabic) {
         StringBuffer result = new StringBuffer("");
 
-        while (1000 <= arabic) {
-            result.append("M");
-            arabic -= 1000;
-        }
+        arabic = addExactNumber(arabic, result, 1000);
 
-        if (arabic >= 900 && arabic < 1000) {
-            result.append("CM");
-            arabic -= 900;
-        }
+        arabic = addDoubleLetterNumber(arabic, result, 900, 1000);
 
-        if (arabic >= 500) {
-            result.append("D");
-            arabic -= 500;
-        }
+        arabic = addExactNumber(arabic, result, 500);
 
-        if (arabic >= 400 && arabic < 500) {
-            result.append("CD");
-            arabic -= 400;
-        }
+        arabic = addDoubleLetterNumber(arabic, result, 400, 500);
 
-        while (100 <= arabic) {
-            result.append("C");
-            arabic -= 100;
-        }
+        arabic = addExactNumber(arabic, result, 100);
 
-        if (arabic >= 90 && arabic < 100) {
-            result.append("XC");
-            arabic -= 90;
-        }
+        arabic = addDoubleLetterNumber(arabic, result, 90, 100);
 
-        if (arabic >= 50) {
-            result.append("L");
-            arabic -= 50;
-        }
+        arabic = addExactNumber(arabic, result, 50);
 
-        if (arabic >= 40 && arabic < 50) {
-            result.append("XL");
-            arabic -= 40;
-        }
+        arabic = addDoubleLetterNumber(arabic, result, 40, 50);
 
-        while (10 <= arabic) {
-            arabic = addExactNumber(arabic, result, 10);
-        }
+        arabic = addExactNumber(arabic, result, 10);
 
-        arabic = addExactNumber(arabic, result, 9);
+        arabic = addDoubleLetterNumber(arabic, result, 9, 10);
 
         arabic = addExactNumber(arabic, result, 5);
 
         arabic = addExactNumber(arabic, result, 4);
 
-        while (1 <= arabic) {
-            arabic = addExactNumber(arabic, result, 1);
-        }
+        arabic = addExactNumber(arabic, result, 1);
 
         return result.toString();
     }
 
-    private int addExactNumber(int arabic, StringBuffer result, int exactNumber) {
-        String romanNumber = romanByArabicNumbers.get(exactNumber);
-        if (arabic >= exactNumber) {
-            result.append(romanNumber);
+    private int addDoubleLetterNumber(int arabic, StringBuffer result, int exactNumber, int nextNumber) {
+        if (arabic >= exactNumber && arabic < nextNumber) {
+            result.append(romanByArabicNumbers.get(exactNumber));
             arabic -= exactNumber;
         }
+        return arabic;
+    }
+
+    private int addExactNumber(int arabic, StringBuffer result, int exactNumber) {
+        while (exactNumber <= arabic) {
+            if (arabic >= exactNumber) {
+                String romanNumber = romanByArabicNumbers.get(exactNumber);
+
+                result.append(romanNumber);
+                arabic -= exactNumber;
+            }
+        }
+
         return arabic;
     }
 
