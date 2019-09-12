@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -25,7 +23,7 @@ public class RomanConverter {
     }
 
     public String convert(int arabic) {
-        StringBuffer result = new StringBuffer("");
+        StringBuffer result = new StringBuffer();
 
         for (Integer value : romanByArabicNumbers.keySet()) {
             while(arabic >= value) {
@@ -34,43 +32,7 @@ public class RomanConverter {
             }
         }
 
-        /*arabic = addExactNumber(arabic, result, 1000);
-        arabic = addDoubleLetterNumber(arabic, result, 900, 1000);
-        arabic = addExactNumber(arabic, result, 500);
-        arabic = addDoubleLetterNumber(arabic, result, 400, 500);
-        arabic = addExactNumber(arabic, result, 100);
-        arabic = addDoubleLetterNumber(arabic, result, 90, 100);
-        arabic = addExactNumber(arabic, result, 50);
-        arabic = addDoubleLetterNumber(arabic, result, 40, 50);
-        arabic = addExactNumber(arabic, result, 10);
-        arabic = addDoubleLetterNumber(arabic, result, 9, 10);
-        arabic = addExactNumber(arabic, result, 5);
-        arabic = addExactNumber(arabic, result, 4);
-        addExactNumber(arabic, result, 1);*/
-
         return result.toString();
     }
-
-//    private int addDoubleLetterNumber(int arabic, StringBuffer result, int exactNumber, int nextNumber) {
-//        if (arabic >= exactNumber && arabic < nextNumber) {
-//            result.append(romanByArabicNumbers.get(exactNumber));
-//            arabic -= exactNumber;
-//        }
-//        return arabic;
-//    }
-//
-//    private int addExactNumber(int arabic, StringBuffer result, int exactNumber) {
-//        while (exactNumber <= arabic) {
-//            if (arabic >= exactNumber) {
-//                String romanNumber = romanByArabicNumbers.get(exactNumber);
-//
-//                result.append(romanNumber);
-//                arabic -= exactNumber;
-//            }
-//        }
-//
-//        return arabic;
-//    }
-
 
 }
